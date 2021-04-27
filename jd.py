@@ -38,7 +38,18 @@ def get_product():
         p_shopnum = li.find_element_by_xpath('.//div[@class="p-shopnum"]/*').text
         p_img = li.find_element_by_xpath('.//div[@class="p-img"]/a/img').get_attribute('src')
         print(info, price, p_commit, p_shopnum, p_img, sep='|')
- 
+
+
+# 翻页
+def next_page():
+    token = search_products()
+    num = 1
+    while (num != token):
+        driver.get('https://search.jd.com/Search?keyword={}&page={}'.format(keyword, 2 * num - 1))
+        driver.implicitly_wait(10)
+        num += 1
+        drop_down()
+        get_product()
  
 if __name__ == "__main__":
     keyword = input('输入你想查找的商品名字:')
