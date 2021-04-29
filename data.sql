@@ -20,7 +20,40 @@ public class DeptDao1 {
             }
 
             set= statement.executeQuery(selectStr);
-
+            
+            while (set.next()){   //遍历 resultSet
+                Dept dept=new Dept();
+                dept.setId(set.getInt("id"));
+                dept.setName(set.getString("name"));
+                dept.setBook(set.getString("book"));
+                depts.add(dept);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("更新失败");
+        }finally {
+            if (set!=null){
+                try {
+                    set.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement!=null){
+                try {
+                    statement.close();  //关闭连接
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection!=null){
+                try {
+                    connection.close(); //关闭连接
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
             
 
         return depts;
